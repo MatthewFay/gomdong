@@ -1,4 +1,4 @@
 # Gomdong 
-Gomdong is an art experience.
+Gomdong is a simple pong game with some twists.
 
-An art experience where curiosity, uniqueness, and creativity all merge together.  
+"I believe in you, Gomdong!"
