@@ -1,5 +1,7 @@
 /* enums */
 
+var test =1;
+
 /* The UI state */
 var State = {
     FREE : 0
@@ -19,6 +21,7 @@ UIEventHandler.prototype.construct = function() {
         switch (e.keyCode) {
         case 37:
             // Left Arrow
+            
             break;
         case 38:
             // Up Arrow
@@ -28,6 +31,7 @@ UIEventHandler.prototype.construct = function() {
             break;
         case 40:
             // Down Arrow
+            playerPaddle.location[y]+=10;
             break;
         }
     };

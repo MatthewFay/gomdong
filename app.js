@@ -20,3 +20,10 @@ var userInterfaceEventHandler = new UIEventHandler();
 
 /* Set the state of the UI event handler */
 userInterfaceEventHandler.setState(State.FREE);
+
+/* Create the Graphics Controller */
+graphicsController = new GraphicsController();
+
+/* Add our visual objects into the graphics controller */
+graphicsController.addObject(playerPaddle);
+graphicsController.addObject(aiPaddle);
