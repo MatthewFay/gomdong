@@ -18,10 +18,39 @@ GraphicsController.prototype.addObject = function(object) {
 };
 
 GraphicsController.prototype.refresh = function() {
+    // Clear the canvas
     ctx.clearRect(0, 0, 600, 400);
+    // Draw the background
+    this.drawBackground();
+    // Draw the objects
     this.objects.forEach(function(object) {
         ctx.beginPath();
-        ctx.rect(object.location[x], object.location[y], object.width, object.height);
+        // Call a tick
+        object.tick();
+        // Handle possible collisions
+        collisionHandler.handlePossibleCollisions();
+        // Draw
+        if (Paddle.prototype.isPrototypeOf(object)) {
+            ctx.rect(object.location[x], object.location[y], object.width, object.height);
+        } else if (Ball.prototype.isPrototypeOf(object)) {
+            ctx.arc(object.location[x], object.location[y], object.radius, 0, 2*Math.PI);
+        }
+        // Get object fill color
+        ctx.fillStyle = object.color;
         ctx.fill();
     });
+};
+
+GraphicsController.prototype.drawBackground = function() {
+    /* Draw the background */
+    // Left barrier
+    ctx.beginPath();
+    ctx.moveTo(100,0);
+    ctx.lineTo(100,400);
+    ctx.stroke();
+    // Right barrier
+    ctx.beginPath();
+    ctx.moveTo(500,0);
+    ctx.lineTo(500,400);
+    ctx.stroke();
 };

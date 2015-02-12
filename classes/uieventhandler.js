@@ -21,18 +21,19 @@ UIEventHandler.prototype.construct = function() {
         switch (e.keyCode) {
         case 37:
             // Left Arrow
-            
+            playerPaddle.setDirection(Direction.LEFT);
             break;
         case 38:
             // Up Arrow
+            playerPaddle.setDirection(Direction.UP);
             break;
         case 39:
             // Right Arrow
+            playerPaddle.setDirection(Direction.RIGHT);
             break;
         case 40:
             // Down Arrow
-            playerPaddle.location[y]+=10;
-            break;
+            playerPaddle.setDirection(Direction.DOWN);
         }
     };
 
@@ -41,17 +42,19 @@ UIEventHandler.prototype.construct = function() {
         switch (e.keyCode) {
         case 37:
             // Left Arrow
-
+            playerPaddle.stopMovement();
             break;
         case 38:
             // Up Arrow
+            playerPaddle.stopMovement();
             break;
         case 39:
             // Right Arrow
+            playerPaddle.stopMovement();
             break;
         case 40:
             // Down Arrow
-            break;
+            playerPaddle.stopMovement();
         }   
     };
 };
