@@ -10,7 +10,8 @@ var StartMenuSelectedButton = {
 /* The User interface controller */
 function UIController() {
 	// Properties
-	this.selectedButton;
+	this.selectedButton; // Button that is currently selected
+    this.currentLevel; // Level that player is currently playing
 	// call constructor function
 	this.construct();
 };
@@ -115,3 +116,16 @@ UIController.prototype.select = function() {
         graphicsController.start();
     }
 };
+
+UIController.prototype.displayLevel = function() {
+    /* Level */
+    // Background color
+    ctx.beginPath();
+    ctx.rect(0, 0, 600, 400);
+    ctx.fillStyle = "aliceblue";
+    ctx.fill();
+    // Level
+    ctx.font="bold 48px Gill Sans";
+    ctx.fillStyle="cadetblue";
+    ctx.fillText("Level " + this.currentLevel.toString(), 130, 175);
+}
