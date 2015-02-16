@@ -2,21 +2,33 @@
 function GraphicsController() {
 	// Properties
 	this.objects = []; // The objects under the controller
-    this.refreshRate = 50; // Refresh rate (ms)
+    this.refreshRate = 17; // Refresh rate (ms) - About 60 FPS
     this.masterTimer; // Master timer
 	// call constructor function
 	this.construct();
 };
 
 GraphicsController.prototype.construct = function() {
-    // Master timer
-    this.masterTimer = setInterval(function () {graphicsController.refresh()}, this.refreshRate);
+    
 };
 
 GraphicsController.prototype.addObject = function(object) {
+    // Add an object to the gameplay loop
     this.objects.push(object);
 };
 
+GraphicsController.prototype.start = function() {
+    // Master timer
+    // Start the gameplay loop
+    this.masterTimer = setInterval(function () {graphicsController.refresh()}, this.refreshRate);
+};
+
+GraphicsController.prototype.stop = function() {
+    // Stop the gameplay loop
+    clearInterval(this.masterTimer);
+};
+
+// GAMEPLAY LOOP //
 GraphicsController.prototype.refresh = function() {
     // Clear the canvas
     ctx.clearRect(0, 0, 600, 400);
@@ -27,8 +39,6 @@ GraphicsController.prototype.refresh = function() {
         ctx.beginPath();
         // Call a tick
         object.tick();
-        // Handle possible collisions
-        collisionHandler.handlePossibleCollisions();
         // Draw
         if (Paddle.prototype.isPrototypeOf(object)) {
             ctx.rect(object.location[x], object.location[y], object.width, object.height);
@@ -39,6 +49,8 @@ GraphicsController.prototype.refresh = function() {
         ctx.fillStyle = object.color;
         ctx.fill();
     });
+    // Beep-boop
+    opponent.tick();
 };
 
 GraphicsController.prototype.drawBackground = function() {
