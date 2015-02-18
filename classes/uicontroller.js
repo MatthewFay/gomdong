@@ -17,7 +17,7 @@ function UIController() {
 };
 
 UIController.prototype.construct = function() {
-	// Basically our app staring point.
+    // Basically our app staring point.
     // Set the UI state
     userInterfaceEventHandler.setState(State.START_MENU);
     // Display the start menu w/ play button selected
