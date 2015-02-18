@@ -61,10 +61,22 @@ Ball.prototype.tick = function() {
 	/* Check for wall collisions */
 	if (this.location[x] <= 0) {
 		// AI WIN
-		
+		// Stop the game
+		graphicsController.stop();
+		// Display a mesage
+		userInterfaceController.displayMessage("AI Wins");
+		// Rest back to start menu after a short period
+		setTimeout(function(){ userInterfaceController = new UIController(); }, 1000);
 	} else if (this.location[x] >= 600) {
 		// PLAYER WIN
-		
+		// Stop the game
+		graphicsController.stop();
+		// Increase the level
+		userInterfaceController.levelUp();
+		// Reset game pieces
+		userInterfaceController.resetGame();
+		// Display level & continue
+		userInterfaceController.startNextLevel();
 	} else if (this.location[y] <= 0) {
 		// Bounce off top wall
 		this.destination[y] = Math.abs(this.destination[y]);

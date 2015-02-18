@@ -88,37 +88,14 @@ UIController.prototype.menuDown = function() {
 
 UIController.prototype.select = function() {
     if (this.selectedButton == StartMenuSelectedButton.PLAY) {
-        // Set the state
-        userInterfaceEventHandler.setState(State.GAMEPLAY);
-
-        // TODO: Display level #
-
-        /* Create the paddles */
-        playerPaddle = new Paddle(PaddleOwner.PLAYER);
-        aiPaddle = new Paddle(PaddleOwner.AI);
-
-        /* Create the ball */
-        ball = new Ball();
-
-        /* Create the Graphics Controller */
-        graphicsController = new GraphicsController();
-
-        /* Add our visual objects into the graphics controller */
-        graphicsController.addObject(playerPaddle);
-        graphicsController.addObject(aiPaddle);
-        graphicsController.addObject(ball);
-
-        /* Create the AI */
-        opponent = new AIController();
-        opponent.start();
-
-        // Start the game
-        graphicsController.start();
+        this.startGame();
     }
 };
 
-UIController.prototype.displayLevel = function() {
-    /* Level */
+UIController.prototype.startNextLevel = function() {
+    /* Display Level info */
+    // Clear screen
+    ctx.clearRect(0, 0, 600, 400);
     // Background color
     ctx.beginPath();
     ctx.rect(0, 0, 600, 400);
@@ -127,5 +104,54 @@ UIController.prototype.displayLevel = function() {
     // Level
     ctx.font="bold 48px Gill Sans";
     ctx.fillStyle="cadetblue";
-    ctx.fillText("Level " + this.currentLevel.toString(), 130, 175);
+    ctx.fillText("Level " + this.currentLevel.toString(), 210, 175);
+    // Start the game after a short period
+    setTimeout(function(){ graphicsController.start(); }, 1000);
+}
+
+UIController.prototype.displayMessage = function(message) {
+    /* Display a message */
+    // Message
+    ctx.font="bold 48px Gill Sans";
+    ctx.fillStyle="cadetblue";
+    ctx.fillText(message, 210, 175);
+}
+
+UIController.prototype.startGame = function() {
+        // Set the state
+        userInterfaceEventHandler.setState(State.GAMEPLAY);
+
+        this.resetGame();
+
+        // Display level #
+        this.currentLevel = 1;
+        this.startNextLevel();
+}
+
+UIController.prototype.levelUp = function() {
+    /* Go up a level */
+    this.currentLevel++;
+}
+
+UIController.prototype.resetGame = function() {
+    /* Reset game  */
+
+    /* Create the paddles */
+    playerPaddle = new Paddle(PaddleOwner.PLAYER);
+    aiPaddle = new Paddle(PaddleOwner.AI);
+
+    /* Create the ball */
+    ball = new Ball();
+
+    /* Create the Graphics Controller */
+    graphicsController = new GraphicsController();
+
+    /* Add our visual objects into the graphics controller */
+    graphicsController.addObject(playerPaddle);
+    graphicsController.addObject(aiPaddle);
+    graphicsController.addObject(ball);
+
+    /* Create the AI */
+    opponent = new AIController();
+    opponent.start();
 }

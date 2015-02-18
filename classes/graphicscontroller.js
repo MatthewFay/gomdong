@@ -4,6 +4,7 @@ function GraphicsController() {
 	this.objects = []; // The objects under the controller
     this.refreshRate = 17; // Refresh rate (ms) - About 60 FPS
     this.masterTimer; // Master timer
+    this.active; // Are we on/off
 	// call constructor function
 	this.construct();
 };
@@ -20,12 +21,14 @@ GraphicsController.prototype.addObject = function(object) {
 GraphicsController.prototype.start = function() {
     // Master timer
     // Start the gameplay loop
+    this.active = true;
     this.masterTimer = setInterval(function () {graphicsController.refresh()}, this.refreshRate);
 };
 
 GraphicsController.prototype.stop = function() {
     // Stop the gameplay loop
     clearInterval(this.masterTimer);
+    this.active = false;
 };
 
 // GAMEPLAY LOOP //
@@ -39,15 +42,17 @@ GraphicsController.prototype.refresh = function() {
         ctx.beginPath();
         // Call a tick
         object.tick();
-        // Draw
-        if (Paddle.prototype.isPrototypeOf(object)) {
-            ctx.rect(object.location[x], object.location[y], object.width, object.height);
-        } else if (Ball.prototype.isPrototypeOf(object)) {
-            ctx.arc(object.location[x], object.location[y], object.radius, 0, 2*Math.PI);
+        // Draw, if active
+        if (graphicsController.active) {
+            if (Paddle.prototype.isPrototypeOf(object)) {
+                ctx.rect(object.location[x], object.location[y], object.width, object.height);
+            } else if (Ball.prototype.isPrototypeOf(object)) {
+                ctx.arc(object.location[x], object.location[y], object.radius, 0, 2*Math.PI);
+            }
+            // Get object fill color
+            ctx.fillStyle = object.color;
+            ctx.fill();
         }
-        // Get object fill color
-        ctx.fillStyle = object.color;
-        ctx.fill();
     });
     // Beep-boop
     opponent.tick();
